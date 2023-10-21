@@ -1,7 +1,6 @@
 import pygame
 import constant as config
 from util.setup import Container
-from util.maths import Gravity
 
 
 def init():
@@ -14,17 +13,7 @@ def init():
     previous_time = pygame.time.get_ticks()
     accumulator = 0.0
 
-    gravity = Gravity([0, 9.81])
-    container = Container(screen, [gravity])
-
-    container.update()
-    container.update()
-    container.update()
-    container.update()
-    container.update()
-    container.update()
-    container.update()
-    container.update()
+    container = Container(screen)
     container.update()
 
     running = True

@@ -1,3 +1,5 @@
+import constant as config
+
 square = [
     [1, 0],
     [0, 1],
@@ -6,23 +8,22 @@ square = [
 ]
 
 # TODO:
-# position vector
-# velocity vector (updates position)
-# acceleration vector (updates velocity)
-# apply field effect
+# position vector -> vector matrix -> draw vector
+# velocity vector -> position vector
+# acceleration vector -> velocity vector
+# vector field (draw arrow)
 
 
-class Gravity:
-    force: list = [0, 9.81]
-
-    def __init__(self, force):
-        self.force = force
-
-    def apply(self, entity):
-        velocity = compute_velocity([0, 1], self.force, entity.mass)
-        # entity.velocity[0] += velocity[0]
-        # entity.velocity[1] += velocity[1]
-        print('g vel', velocity)
+def compute_field(density):
+    matrix = []
+    width = config.window_width
+    height = config.window_height
+    x_limit = int(width/density)
+    y_limit = int(height/density)
+    for i in range(1, x_limit):
+        for j in range(1, y_limit):
+            matrix.append([i*density, j*density])
+    return matrix
 
 
 def compute_matrix(position):

@@ -1,5 +1,7 @@
+import math
 import pygame
 import constant as config
+from lib.field import Field
 from lib.entity import Entity
 
 
@@ -8,18 +10,19 @@ class Container:
     entity: list = []
     field: list = []
 
-    def __init__(self, screen, field) -> None:
-        entity = Entity(screen, [300, 300], [1, -3], [1, 1], 10)
+    def __init__(self, screen) -> None:
+        field = Field(screen, 20)
+        entity = Entity(screen, 20)
         self.entity = [entity]
+        self.field = [field]
         self.screen = screen
-        self.field = field
 
     def update(self):
         setup(self.screen)
-        for entity in self.entity:
-            entity.draw()
-            for field in self.field:
-                field.apply(entity)
+        for e in self.entity:
+            e.draw()
+        for f in self.field:
+            f.draw()
 
 
 def setup(screen: pygame.Surface):
