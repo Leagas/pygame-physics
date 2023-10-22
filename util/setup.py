@@ -22,7 +22,7 @@ class Container:
         for e in self.entity:
             e.draw()
         for f in self.field:
-            f.draw()
+            f.draw(self.entity)
 
 
 def setup(screen: pygame.Surface):
