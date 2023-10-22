@@ -11,9 +11,10 @@ class Container:
     field: list = []
 
     def __init__(self, screen) -> None:
-        field = Field(screen, 20)
-        entity = Entity(screen, 20)
-        self.entity = [entity]
+        field = Field(screen, 10)
+        entity1 = Entity(screen, [300,300], 20)
+        # entity2 = Entity(screen, [250,250], 5)
+        self.entity = [entity1]
         self.field = [field]
         self.screen = screen
 

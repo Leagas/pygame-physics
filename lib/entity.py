@@ -1,26 +1,30 @@
 import pygame
-from util.maths import compute_matrix, compute_velocity
 
 
 class Entity:
     screen: pygame.Surface = None
     radius: int
+    field: int
+    position: list
 
-    def __init__(self, screen, radius):
+    def __init__(self, screen, position, radius):
         self.screen = screen
+        self.position = position
         self.radius = radius
+        self.field = radius*10
 
     def draw(self):
+        x,y = self.position
         pygame.draw.circle(
             self.screen,
             (0, 0, 0),
-            [300, 300],
+            [x, y],
             self.radius
         )
         pygame.draw.circle(
             self.screen,
             (0, 0, 255),
-            [300, 300],
-            self.radius*10,
+            [x, y],
+            self.field,
             1
         )
