@@ -21,10 +21,10 @@ class Entity:
             [x, y],
             self.radius
         )
-        pygame.draw.circle(
-            self.screen,
-            (0, 0, 255),
-            [x, y],
-            self.field,
-            1
-        )
+        # pygame.draw.circle(
+        #     self.screen,
+        #     (0, 0, 0),
+        #     [x, y],
+        #     self.field,
+        #     1
+        # )

@@ -13,7 +13,7 @@ class Field:
         self.density = density
         self.matrix = self.compute_field(self.density, fixed_surface)
 
-    def compute_field(self, density, fixed_urface):
+    def compute_field(self, density, fixed_surface):
         matrix = []
         width = config.window_width
         height = config.window_height
@@ -22,7 +22,7 @@ class Field:
         for i in range(1, x_limit):
             for j in range(1, y_limit):
                 matrix.append([i*density, j*density, [0, 0]])
-                pygame.draw.circle(fixed_urface, (0, 0, 0), [i*density, j*density], 1, 1)
+                pygame.draw.circle(fixed_surface, (0, 0, 0), [i*density, j*density], 1, 1)
         return matrix
 
     def calculate_vector(self, entity, p):
