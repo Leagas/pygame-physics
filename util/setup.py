@@ -11,15 +11,15 @@ class Container:
     field: list = []
 
     def __init__(self, screen) -> None:
-        field = Field(screen, 10)
-        entity1 = Entity(screen, [300,300], 20)
-        # entity2 = Entity(screen, [250,250], 5)
-        self.entity = [entity1]
+        field = Field(screen, 20)
+        entity1 = Entity(screen, [300, 300], 20)
+        entity2 = Entity(screen, [200, 200], 10)
+        self.entity = [entity1, entity2]
         self.field = [field]
         self.screen = screen
+        setup(self.screen)
 
     def update(self):
-        setup(self.screen)
         for e in self.entity:
             e.draw()
         for f in self.field:
