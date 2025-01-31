@@ -8,18 +8,17 @@ def init():
     screen = pygame.display.set_mode(
         (config.window_width, config.window_height))
 
-    clock = pygame.time.Clock()
     desired_fps = 60
-    frame_time = 1 / desired_fps
-    previous_time = pygame.time.get_ticks() / 1000.0
+    frame_time = round(1 / desired_fps, 4)
+    previous_time = 0.0
     accumulator = 0.0
 
     container = Container(screen)
 
     running = True
     while running:
-        current_time = pygame.time.get_ticks() / 1000.0
-        elapsed_time = current_time - previous_time
+        current_time = pygame.time.get_ticks()
+        elapsed_time = (current_time - previous_time) / 1000.0
         previous_time = current_time
         accumulator += elapsed_time
 
@@ -32,6 +31,5 @@ def init():
             accumulator -= frame_time
 
         pygame.display.flip()
-        clock.tick(desired_fps)
 
     pygame.quit()

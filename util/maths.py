@@ -22,6 +22,9 @@ def compute_position_vector(position, velocity, frame_time):
 
 
 def compute_total_acceleration(mass, forces):
+    if not forces:
+        return [0, 0]
+
     accelerations = [
         compute_acceleration_vector(
             mass, force["mag"], math.radians(force["angle"]))

@@ -16,7 +16,7 @@ class Entity:
         self.radius = mass*10
         self.forces = [
             {
-                "mag": 100,
+                "mag": 10,
                 "angle": 0
             }
         ]
@@ -28,11 +28,12 @@ class Entity:
         self.forces.append(force)
 
     def update(self, frame_time):
-        d_acceleration = compute_total_acceleration(self.mass, self.forces)
-        d_velocity = compute_velocity_vector(self.velocity, d_acceleration)
-        d_position = compute_position_vector(
-            self.position, d_velocity, frame_time)
-        self.position = d_position
+        self.acceleration = compute_total_acceleration(self.mass, self.forces)
+        self.velocity = compute_velocity_vector(
+            self.velocity, self.acceleration)
+        self.position = compute_position_vector(
+            self.position, self.velocity, frame_time)
+        self.forces = []
 
     def draw(self):
         x, y = self.position
