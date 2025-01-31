@@ -4,19 +4,27 @@
 # acceleration vector -> velocity vector
 # vector field (draw arrow)
 
-
-def compute_matrix(position):
-    entity_vector = []
-    v_x = position[0]
-    v_y = position[1]
-    for vector in square:
-        entity_vector.append([v_x, v_y])
-        v_x += vector[0]*100
-        v_y -= vector[1]*100
-    return entity_vector
+import math
 
 
-def compute_velocity(vector, force, mass):
-    a_x = force[0]/mass
-    a_y = force[1]/mass
-    return [vector[0] + vector[0]*a_x, vector[1] + vector[1]*a_y]
+def compute_acceleration_vector(mass, force, angle):
+    Fx = force*math.cos(angle)
+    Fy = force*math.sin(angle)
+    return [Fx/mass, Fy/mass]
+
+
+def compute_velocity_vector(velocity, acceleration):
+    return [v + a for v, a in zip(velocity, acceleration)]
+
+
+def compute_position_vector(position, velocity, frame_time):
+    return [p + v*frame_time for p, v in zip(position, velocity)]
+
+
+def compute_total_acceleration(mass, forces):
+    accelerations = [
+        compute_acceleration_vector(
+            mass, force["mag"], math.radians(force["angle"]))
+        for force in forces
+    ]
+    return list(map(sum, zip(*accelerations)))
