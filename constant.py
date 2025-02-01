@@ -1,4 +1,3 @@
-window_width = 600
-window_height = 600
+window_width = 1000
+window_height = 1000
 window_background = (255, 255, 255)
-gravity = 9.81
