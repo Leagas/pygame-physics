@@ -7,10 +7,10 @@
 import math
 
 
-def compute_acceleration_vector(mass, force, angle):
-    Fx = force*math.cos(angle)
-    Fy = force*math.sin(angle)
-    return [Fx/mass, Fy/mass]
+def compute_force_vector(mass, force, angle):
+    Fx = force*math.cos(angle) / mass
+    Fy = force*math.sin(angle) / mass
+    return [Fx, Fy]
 
 
 def compute_velocity_vector(velocity, acceleration):
@@ -25,9 +25,21 @@ def compute_total_acceleration(mass, forces):
     if not forces:
         return [0, 0]
 
-    accelerations = [
-        compute_acceleration_vector(
-            mass, force["mag"], math.radians(force["angle"]))
+    delta_acceleration = [
+        compute_force_vector(
+            mass, force[0], math.radians(force[1]))
         for force in forces
     ]
-    return list(map(sum, zip(*accelerations)))
+    return list(map(sum, zip(*delta_acceleration)))
+
+
+def compute_total_impulse(mass, impulses):
+    if not impulses:
+        return [0, 0]
+
+    delta_impulse = [
+        compute_force_vector(
+            mass, impulse[0], math.radians(impulse[1]))
+        for impulse in impulses
+    ]
+    return list(map(sum, zip(*delta_impulse)))
