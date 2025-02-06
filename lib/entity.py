@@ -1,6 +1,14 @@
 import pygame
-from util.maths import compute_total_acceleration, compute_velocity_vector, compute_position_vector, compute_total_impulse
+import sys
+from util.maths import compute_total_acceleration, compute_velocity_vector, compute_position_vector
 from util.util import line_length
+
+'''
+TODO:
+ 1. Calculate change in velocity after collision
+    - calculate applied impulse using impulse momentum theorem
+    - calculate angle of force vector
+'''
 
 
 class Entity:
@@ -11,59 +19,44 @@ class Entity:
     acceleration: list
     velocity: list
 
-    def __init__(self, screen, position, mass, radius, field):
+    def __init__(self, screen, position, mass, radius, field, color):
         self.screen = screen
         self.mass = mass
         self.radius = radius
-        self.forces = []
+        self.forces = [
+            [98, 90]
+        ]
         self.impulse = []
         self.acceleration = [0, 0],
         self.velocity = [0, 0]
         self.position = position
         self.field = field
-
-    def apply_force(self, entities):
-        forces = []
-        for e in entities:
-            if e != self:
-                distance = line_length(self.position, e.position)
-                if distance < e.field:
-                    forces.append([20, 90])
-        self.forces = forces
-
-    def apply_impulse(self, entities):
-        for e in entities:
-            if e != self:
-                distance = line_length(self.position, e.position)
-                if distance < self.radius + e.radius:
-                    self.impulse.append([200, -90])
+        self.color = color
 
     def compute_force(self, frame_time):
         self.acceleration = compute_total_acceleration(
             self.mass, self.forces)
         self.velocity = compute_velocity_vector(
             self.velocity, self.acceleration, frame_time)
+
+    def detect_collision(self):
+        distance = line_length([500, 1000], self.position)
+        if (distance < self.radius):
+            self.acceleration = [0, -1 * self.acceleration[1] * 0.9]
+            self.velocity = [0, -1 * self.velocity[1] * 0.9]
+            self.position[1] = 1000 - self.radius
+
+    def update(self, frame_time):
+        self.compute_force(frame_time)
+        self.detect_collision()
         self.position = compute_position_vector(
             self.position, self.velocity, frame_time)
-
-    def compute_impulse(self, frame_time):
-        delta_v = compute_total_impulse(self.mass, self.impulse)
-        self.velocity = compute_velocity_vector(
-            self.velocity, delta_v, frame_time)
-        self.impulse.clear()
-
-    def update(self, entities, frame_time):
-        self.apply_force(entities)
-        self.apply_impulse(entities)
-        if self.impulse:
-            self.compute_impulse(frame_time)
-        self.compute_force(frame_time)
 
     def draw(self):
         x, y = self.position
         pygame.draw.circle(
             self.screen,
-            (0, 0, 0),
+            (self.color, 0, 0),
             [x, y],
             self.radius
         ),

@@ -25,15 +25,3 @@ def compute_total_acceleration(mass, forces):
         for force in forces
     ]
     return list(map(sum, zip(*delta_acceleration)))
-
-
-def compute_total_impulse(mass, impulses):
-    if not impulses:
-        return [0, 0]
-
-    delta_impulse = [
-        compute_force_vector(
-            mass, impulse[0], math.radians(impulse[1]))
-        for impulse in impulses
-    ]
-    return list(map(sum, zip(*delta_impulse)))
