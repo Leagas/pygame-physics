@@ -1,6 +1,6 @@
 import pygame
 import sys
-from util.maths import compute_total_acceleration, compute_velocity_vector, compute_position_vector
+from util.maths import compute_total_acceleration, compute_velocity_vector, compute_position_vector, compute_impulse_vector
 from util.util import line_length
 
 '''
@@ -41,10 +41,9 @@ class Entity:
 
     def detect_collision(self):
         distance = line_length([500, 1000], self.position)
-        if (distance < self.radius):
-            self.acceleration = [0, -1 * self.acceleration[1] * 0.9]
-            self.velocity = [0, -1 * self.velocity[1] * 0.9]
-            self.position[1] = 1000 - self.radius
+        if (distance < self.radius + 1):
+            final_velocity = compute_impulse_vector(self)
+            self.velocity = final_velocity
 
     def update(self, frame_time):
         self.compute_force(frame_time)

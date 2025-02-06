@@ -25,3 +25,19 @@ def compute_total_acceleration(mass, forces):
         for force in forces
     ]
     return list(map(sum, zip(*delta_acceleration)))
+
+
+def compute_impulse_vector(object1):
+    # e = -0.9
+    # total_mass = object1.mass + object2.mass
+    # r_vx = (object1.velocity[0] - object2.velocity[0])
+    # r_vy = (object1.velocity[1] - object2.velocity[1])
+    # v1x = e*object2.mass*r_vx / total_mass
+    # v1y = e*object2.mass*r_vy / total_mass
+    # v2x = e*object1.mass*r_vx / total_mass
+    # v2y = e*object1.mass*r_vy / total_mass
+    # return [v1x, v1y], [v2x, v2y]
+    e = -0.9
+    vx = object1.velocity[0]
+    vy = e*object1.velocity[1]
+    return [vx, vy]
